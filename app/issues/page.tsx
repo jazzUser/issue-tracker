@@ -1,24 +1,14 @@
-import React from "react";
-import {
-  Table,
-  TableCell,
-  TableColumnHeaderCell,
-} from "@radix-ui/themes";
-import Link from "../components/Link";
 import prisma from "@/prisma/client";
-import IssueStatusBadge from "../components/IssueStatusBadge";
-import delay from "delay";
+import { Table, TableCell, TableColumnHeaderCell } from "@radix-ui/themes";
 import IssueActions from "./IssueActions";
+import { IssueStatusBadge, Link } from "@/app/components";
 
 const IssuesPage = async () => {
-  
-
   const issues = await prisma.issue.findMany();
-  await delay(2000);
 
   return (
     <div>
-      <IssueActions/>
+      <IssueActions />
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
@@ -34,7 +24,7 @@ const IssuesPage = async () => {
         <Table.Body>
           {issues.map((issue) => (
             <Table.Row key={issue.id}>
-              <TableCell>                
+              <TableCell>
                 <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
                 <div className="block md:hidden">
                   <IssueStatusBadge status={issue.status} />
