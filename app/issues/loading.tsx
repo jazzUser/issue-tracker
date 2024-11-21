@@ -1,5 +1,5 @@
-import { Table, TableCell, TableColumnHeaderCell } from "@radix-ui/themes";
 import Skeleton from "@/app/components/Skeleton";
+import { Table, TableCell, TableColumnHeaderCell } from "@radix-ui/themes";
 import IssueActions from "./IssueActions";
 const LoadingIssuesPage = () => {
   const issues = [1, 2, 3, 4];
