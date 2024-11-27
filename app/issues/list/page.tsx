@@ -1,6 +1,7 @@
 import prisma from "@/prisma/client";
-import { Table } from "@radix-ui/themes";
+import { Table, TableCell, TableColumnHeaderCell } from "@radix-ui/themes";
 import IssueActions from "./IssueActions";
+import { IssueStatusBadge, Link } from "@/app/components";
 
 const IssuesPage = async () => {
   const issues = await prisma.issue.findMany();
@@ -11,28 +12,30 @@ const IssuesPage = async () => {
       <Table.Root variant="surface">
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeaderCell>Issue</Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className="hidden md:table-cell">
+            <TableColumnHeaderCell>Issue</TableColumnHeaderCell>
+            <TableColumnHeaderCell className="hidden md:table-cell">
               Status
-            </Table.ColumnHeaderCell>
-            <Table.ColumnHeaderCell className="hidden md:table-cell">
+            </TableColumnHeaderCell>
+            <TableColumnHeaderCell className="hidden md:table-cell">
               Created
-            </Table.ColumnHeaderCell>
+            </TableColumnHeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {issues.map((issue) => (
             <Table.Row key={issue.id}>
-              <Table.Cell>
-                {issue.title}
-                <div className="block md:hidden">{issue.status}</div>
-              </Table.Cell>
-              <Table.Cell className="hidden md:table-cell">
-                {issue.status}
-              </Table.Cell>
-              <Table.Cell className="hidden md:table-cell">
+              <TableCell>
+                <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
+                <div className="block md:hidden">
+                  <IssueStatusBadge status={issue.status} />
+                </div>
+              </TableCell>
+              <TableCell className="hidden md:table-cell">
+                <IssueStatusBadge status={issue.status} />
+              </TableCell>
+              <TableCell className="hidden md:table-cell">
                 {issue.createdAt.toDateString()}
-              </Table.Cell>
+              </TableCell>
             </Table.Row>
           ))}
         </Table.Body>
@@ -41,6 +44,6 @@ const IssuesPage = async () => {
   );
 };
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export default IssuesPage;
