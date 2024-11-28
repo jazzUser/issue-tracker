@@ -25,7 +25,7 @@ const IssueDetailPage = async ({ params }: Props) => {
       </Box>
       {session && (
         <Box>
-          <AssigneeSelect/>
+          <AssigneeSelect issue={issue}/>
           <EditIssueButton issueId={issue.id}></EditIssueButton>
         </Box>
       )}
