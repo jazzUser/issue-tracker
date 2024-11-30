@@ -27,13 +27,20 @@ const Pagination = ({
   const pageCount = Math.ceil(itemCount / pageSize);
   if (pageCount <= 1) return null;
 
-  const changePage = (page: number) => {
+/*   const changePage = (page: number) => {
     const params = new URLSearchParams(searchParams);
     params.set('page', page.toString());
     router.push('?' + params.toString());
-  }
+  } */
 
-  return (
+  const changePage = (page: number) => {
+    // Convert ReadonlyURLSearchParams to a mutable object
+    const params = new URLSearchParams(Object.fromEntries(searchParams.entries()));
+    params.set("page", page.toString());
+    router.push("?" + params.toString());
+  };
+
+  return (   
     <Flex align="center" gap="2">
       <Text size="2">
         Page {currentPage} of {pageCount}
